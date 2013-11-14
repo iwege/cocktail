@@ -62,8 +62,11 @@
     var originalExtend;
 
     Cocktail.patch = function patch(Backbone) {
+        
+        if (Backbone._cocktailPatched) return ;
+        
         originalExtend = Backbone.Model.extend;
-
+        
         var extend = function(protoProps, classProps) {
             var klass = originalExtend.call(this, protoProps, classProps);
 
@@ -82,12 +85,18 @@
 
             klass.extend = extend;
         });
+        
+        Backbone._cocktailPatched = true;
     };
 
     Cocktail.unpatch = function unpatch(Backbone) {
+        if(!Backbone._cocktailPatched) return ;
+        
         _([Backbone.Model, Backbone.Collection, Backbone.Router, Backbone.View]).each(function(klass) {
             klass.mixin = undefined;
             klass.extend = originalExtend;
         });
+        
+        delete Backbone._cocktailPatched;
     };
 })();
