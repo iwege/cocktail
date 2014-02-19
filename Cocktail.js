@@ -24,17 +24,6 @@
   }
 
 }(this, function(root, Cocktail, _, Backbone) {
-  var Cocktail = {};
-
-  if (typeof exports !== 'undefined') {
-    Cocktail = exports;
-  } else if (typeof define === 'function') {
-    define(function(require) {
-      return Cocktail;
-    });
-  } else {
-    this.Cocktail = Cocktail;
-  }
 
   Cocktail.mixins = {};
 
